@@ -1,9 +1,10 @@
 package main
 
 import (
-	"SortViz/internal/handler"
 	"log"
 	"net/http"
+
+	"github.com/parthsolanke/SortViz/internal/handler"
 )
 
 func main() {

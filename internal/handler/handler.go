@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"SortViz/internal/sorter"
 	"encoding/json"
 	"html/template"
 	"net/http"
+
+	"github.com/parthsolanke/SortViz/internal/sorter"
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
