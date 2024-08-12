@@ -54,15 +54,14 @@ This structure separates concerns clearly and makes it easy to extend the projec
 
 SortViz is a simple web application that visualizes sorting algorithms. It's built using Go for the backend and HTMX for dynamic frontend interactions.
 
-## Features
+### Features
 - Visualizes each step of the sorting process.
 - Built with Go and HTMX.
 - Extendable with multiple sorting algorithms.
 
-## Getting Started
-
 ### Prerequisites
 - Go 1.20 or later
+- Make (optional, for using the Makefile)
 
 ### Installation
 1. Clone the repository:
@@ -79,5 +78,26 @@ SortViz is a simple web application that visualizes sorting algorithms. It's bui
     ```
 4. Open your browser and navigate to `http://localhost:8080`.
 
+### Using the Makefile
+
+#### Building the Project
+To compile the Go application and create an executable binary:
+```bash
+make build
+```
+
+#### Running the Project
+To build and run the application:
+```bash
+make run
+```
+
+After running, open your browser and navigate to `http://localhost:8080`.
+
+#### Cleaning Up
+To remove the generated binary and clean up the build directory:
+```bash
+make clean
+```
 ## License
 This project is licensed under the [MIT License](./LICENSE).
