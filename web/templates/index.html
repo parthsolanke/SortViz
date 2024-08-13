@@ -3,28 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorting Visualizer</title>
-    <link rel="stylesheet" href="../static/styles.css">
+    <title>SortViz</title>
     <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="/static/scripts/scripts.js" defer></script>
 </head>
 <body>
     <h1>Sorting Visualizer</h1>
     <button hx-get="/sort" hx-trigger="click" hx-target="#visualizer">Start Sorting</button>
 
     <div id="visualizer"></div>
-
-    <script>
-        document.addEventListener('htmx:afterRequest', function(event) {
-            let steps = event.detail.xhr.response;
-            let visualizer = document.getElementById('visualizer');
-            visualizer.innerHTML = '';
-
-            steps.forEach((step, index) => {
-                setTimeout(() => {
-                    visualizer.innerHTML = '<div>' + step.array.join(' ') + '</div>';
-                }, index * 1000); // Adjust timing for visualization speed
-            });
-        });
-    </script>
 </body>
 </html>

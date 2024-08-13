@@ -50,7 +50,7 @@ This structure separates concerns clearly and makes it easy to extend the projec
 
 ---
 
-# SortViz
+# ![Icon](./web/static/favicon.ico) SortViz
 
 SortViz is a simple web application that visualizes sorting algorithms. It's built using Go for the backend and HTMX for dynamic frontend interactions.
 
