@@ -5,14 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SortViz</title>
     <script src="https://unpkg.com/htmx.org@1.7.0"></script>
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-    <script src="/static/scripts/scripts.js" defer></script>
+    <script src="../static/scripts/scripts.js" defer></script>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="../static/assets/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h1>Sorting Visualizer</h1>
-    <button hx-get="/sort" hx-trigger="click" hx-target="#visualizer">Start Sorting</button>
+    <div class="container">
+        <div class="sidebar">
+            <h2>⚙️ Controls</h2>
 
-    <div id="visualizer"></div>
+            <div class="algorithm-select">
+                <select id="algorithm" name="algorithm">
+                    <option value="selection">Selection Sort</option>
+                    <option value="bubble">Bubble Sort</option>
+                    <option value="insertion">Insertion Sort</option>
+                    <option value="merge">Merge Sort</option>
+                    <option value="re-bubble">Recursive Bubble Sort</option>
+                    <option value="re-insertion">Recursive Insertion Sort</option>
+                    <option value="quick">Quick Sort</option>
+                </select>
+            </div>
+
+            <button id="play-pause" hx-get="/sort" hx-trigger="click" hx-target="#visualizer" class="control-button">
+                <i class="fas fa-play"></i> Start
+            </button>
+
+            <button id="pause" hx-get="/pause" hx-trigger="click" hx-target="#visualizer" class="control-button">
+                <i class="fas fa-pause"></i> Stop
+            </button>
+
+            <button id="randomize" class="control-button">
+                <i class="fas fa-random"></i> Shuffle
+            </button>
+            
+            <div class="speed-control">
+                <label for="speed">Speed:</label>
+                <input type="range" id="speed" name="speed" min="1" max="10" value="5">
+            </div>
+
+            <button id="analyze-complexity" class="control-button">
+                <i class="fa-solid fa-chart-line"></i> Complexity
+            </button>
+
+            <button id="code" class="control-button">
+                <i class="fa-solid fa-code"></i> Code
+            </button>
+
+        </div>
+
+        <div class="main-content">
+            <h1>🔮SortViz</h1>
+            <div id="visualizer"></div>
+        </div>
+
+    </div>
 </body>
 </html>

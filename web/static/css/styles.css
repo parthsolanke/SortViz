@@ -1,8 +1,12 @@
+html {
+    height: auto;
+}
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #121212; /* Dark background */
-    color: #ffffff; /* Light text */
+    background-color: #121212;
+    color: #ffffff;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,7 +14,10 @@ body {
 
 h1 {
     margin-top: 50px;
-    color: #ffffff; /* Light text for the title */
+    color: #ffffff;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
 }
 
 button {
@@ -28,24 +35,103 @@ button:hover {
     background-color: #218838;
 }
 
+.bar {
+    width: 20px;
+    margin: 1px;
+    background-color: #007BFF;
+    transition: height 0.5s, transform 0.5s ease-in-out; /* Added transform transition */
+    border-radius: 2px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #262626;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.control-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.control-button i {
+    margin-right: 10px;
+}
+
+.control-button:hover {
+    background-color: #45a049;
+}
+
+.speed-control, .algorithm-select {
+    margin: 20px 0;
+}
+
+.speed-control label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.algorithm-select {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.algorithm-select select {
+    width: 100%;
+    padding: 12px 24px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #1f1f1f;
+    color: #eee;
+    appearance: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+}
+
+
+.algorithm-select select option {
+    background-color: #1f1f1f;
+    color: #eee;
+    text-align: center;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
 #visualizer {
     margin: 50px auto;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    height: 300px;
-    width: 700px;
-    border: 2px solid #333; /* Darker border for dark theme */
-    background-color: #1e1e1e; /* Darker container background */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Adjusted shadow */
-    border-radius: 10px;
+    height: 400px;
+    width: 800px;
+    border: 5px solid #333; 
+    background-color: #1e1e1e; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
     overflow: hidden;
-}
-
-.bar {
-    width: 20px;
-    margin: 0 2px;
-    background-color: #007BFF;
-    transition: height 0.5s, transform 0.5s ease-in-out; /* Added transform transition */
-    border-radius: 3px;
 }
