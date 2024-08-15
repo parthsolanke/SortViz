@@ -39,7 +39,7 @@ button:hover {
     width: 20px;
     margin: 1px;
     background-color: #007BFF;
-    transition: height 0.5s, transform 0.5s ease-in-out; /* Added transform transition */
+    transition: height 0.5s, transform 0.5s ease-in-out;
     border-radius: 2px;
 }
 
@@ -98,7 +98,6 @@ h2 {
 .algorithm-select select {
     width: 100%;
     padding: 12px 24px;
-    font-family: Arial, sans-serif;
     font-size: 16px;
     border-radius: 5px;
     border: none;
