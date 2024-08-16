@@ -27,15 +27,11 @@
                 </select>
             </div>
 
-            <button id="play-pause" hx-get="/sort" hx-trigger="click" hx-target="#visualizer" class="control-button">
+            <button id="play-pause" class="control-button">
                 <i class="fas fa-play"></i> Start
             </button>
 
-            <button id="pause" hx-get="/pause" hx-trigger="click" hx-target="#visualizer" class="control-button">
-                <i class="fas fa-pause"></i> Stop
-            </button>
-
-            <button id="randomize" class="control-button">
+            <button id="randomize" class="control-button" onclick="shuffleAndDisplay()">
                 <i class="fas fa-random"></i> Shuffle
             </button>
             
