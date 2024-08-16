@@ -1,38 +1,13 @@
-// document.addEventListener('htmx:afterRequest', function(event) {
-//     let steps = event.detail.xhr.response;
-//     let visualizer = document.getElementById('visualizer');
-//     visualizer.innerHTML = '';
-//     steps = JSON.parse(steps);
-
-//     const containerHeight = visualizer.clientHeight;
-//     const maxValue = Math.max(...steps[0].array);
-//     const scalingFactor = containerHeight / maxValue - 0.5;
-
-//     // Initial visualization
-//     steps[0].array.forEach(value => {
-//         let bar = document.createElement('div');
-//         bar.classList.add('bar');
-//         bar.style.height = (value * scalingFactor) + 'px';
-//         visualizer.appendChild(bar);
-//     });
-
-//     // Animation of sorting
-//     steps.forEach((step, index) => {
-//         setTimeout(() => {
-//             step.array.forEach((value, i) => {
-//                 let bar = visualizer.children[i];
-//                 bar.style.height = (value * scalingFactor) + 'px';
-//             });
-//         }, index * 100);
-//     });
-// });
-
-let visualizer = document.getElementById('visualizer');
-let steps = Array.from({length: 40}, (_, i) => i + 1);
+const visualizer = document.getElementById('visualizer');
+const snsButton = document.getElementById('play-pause');
+const scalingFactor = visualizer.clientHeight / 40 - 0.25;
+let steps = Array.from({ length: 40 }, (_, i) => i + 1);
 let sortedSteps = null;
-
-const containerHeight = visualizer.clientHeight;
-const scalingFactor = containerHeight / Math.max(...steps) - 0.25;
+let animationInProgress = false;
+let isSorted = false;
+let isPaused = false;
+let animationTimeouts = [];
+let currentIndex = 0;
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -43,52 +18,116 @@ function shuffleArray(array) {
 }
 
 function shuffleAndDisplay() {
+    if (animationInProgress) {
+        alert('Sorting in progress!');
+        return;
+    }
+
     visualizer.innerHTML = '';
     steps = shuffleArray(steps);
-    steps.forEach(value => {
-        let bar = document.createElement('div');
+    steps.forEach((value) => {
+        const bar = document.createElement('div');
         bar.classList.add('bar');
-        bar.style.height = (value * scalingFactor) + 'px';
+        bar.id = value;
         bar.textContent = value;
+        bar.style.height = `${value * scalingFactor}px`;
         visualizer.appendChild(bar);
     });
+
+    // reset the sorting state
     sortedSteps = null;
+    isSorted = false;
+    currentIndex = 0;
+    animationTimeouts = [];
+    isPaused = false;
 }
 
 function animateSorting(sortedSteps) {
-    sortedSteps.forEach((step, index) => {
-        setTimeout(() => {
-            step.array.forEach((value, i) => {
-                let bar = visualizer.children[i];
-                bar.style.height = (value * scalingFactor) + 'px';
-            });
-        }, index * 100);
+    animationInProgress = true;
+    isPaused = false;
+
+    const speed = 10;
+
+    sortedSteps.slice(currentIndex).forEach((currentStep, index) => {
+        const timeout = setTimeout(() => {
+            if (isPaused) return; // if paused, exit the function
+
+            if (currentIndex > 0) {
+                const previousStep = sortedSteps[currentIndex - 1];
+                currentStep.array.forEach((value, i) => {
+                    if (value !== previousStep[i]) {
+                        const previousIndex = previousStep.array.indexOf(value);
+                        if (previousIndex !== -1) {
+                            const bar = document.getElementById(value.toString());
+                            const targetBar = visualizer.children[i];
+                            visualizer.insertBefore(bar, targetBar.nextSibling);
+                        }
+                    }
+                });
+            }
+
+            currentIndex++;
+
+            if (currentIndex === sortedSteps.length) {
+                animationInProgress = false;
+                isSorted = true;
+                stopSorting();
+            }
+        }, index * speed);
+
+        animationTimeouts.push(timeout);
     });
 }
 
 function getSortedArray() {
     if (sortedSteps === null) {
         const algorithmType = document.getElementById('algorithm').value;
-        fetch(
-            '/sort',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({array: steps})
-            }
-        )
-        .then(response => response.json())
-        .then(data => {
-            sortedSteps = data;
-            animateSorting(sortedSteps);
+        fetch('/sort', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ array: steps }),
         })
-        .catch(error => console.error('Error:', error));
+            .then((response) => response.json())
+            .then((data) => {
+                sortedSteps = data;
+                animateSorting(sortedSteps);
+            })
+            .catch((error) => console.error('Error:', error));
     } else {
-        alert('Request already made!');
+        animateSorting(sortedSteps); // resume animation if already sorted
     }
 }
 
-shuffleAndDisplay();
+function startSorting() {
+    if (!isSorted) {
+        snsButton.classList.add('active');
+        snsButton.innerHTML = '<i class="fas fa-pause"></i> Stop';
+        snsButton.onclick = stopSorting;
 
+        if (isPaused) {
+            animateSorting(sortedSteps);
+        } else {
+            getSortedArray();
+        }
+    } else {
+        alert('Array already sorted!');
+    }
+}
+
+function stopSorting() {
+    snsButton.classList.remove('active');
+    snsButton.innerHTML = '<i class="fas fa-play"></i> Start';
+    snsButton.onclick = startSorting;
+    isPaused = true;
+
+    // clear the timeouts to stop the ongoing animation
+    animationTimeouts.forEach(timeout => clearTimeout(timeout));
+    animationTimeouts = [];
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    shuffleAndDisplay();
+    snsButton.onclick = startSorting;
+});
