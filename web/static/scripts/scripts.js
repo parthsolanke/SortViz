@@ -1,5 +1,6 @@
 const visualizer = document.getElementById('visualizer');
 const snsButton = document.getElementById('play-pause');
+const speedControl = document.getElementById('speed');
 const scalingFactor = visualizer.clientHeight / 40 - 0.25;
 let steps = Array.from({ length: 40 }, (_, i) => i + 1);
 let sortedSteps = null;
@@ -8,6 +9,7 @@ let isSorted = false;
 let isPaused = false;
 let animationTimeouts = [];
 let currentIndex = 0;
+let speed = 10;
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -24,6 +26,8 @@ function shuffleAndDisplay() {
     }
 
     visualizer.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+
     steps = shuffleArray(steps);
     steps.forEach((value) => {
         const bar = document.createElement('div');
@@ -31,52 +35,65 @@ function shuffleAndDisplay() {
         bar.id = value;
         bar.textContent = value;
         bar.style.height = `${value * scalingFactor}px`;
-        visualizer.appendChild(bar);
+        fragment.appendChild(bar);
     });
 
-    // reset the sorting state
+    visualizer.appendChild(fragment);
+
+    resetSortingState();
+}
+
+function resetSortingState() {
     sortedSteps = null;
     isSorted = false;
     currentIndex = 0;
-    animationTimeouts = [];
     isPaused = false;
+    clearTimeouts();
+}
+
+function clearTimeouts() {
+    animationTimeouts.forEach(timeout => clearTimeout(timeout));
+    animationTimeouts = [];
 }
 
 function animateSorting(sortedSteps) {
     animationInProgress = true;
     isPaused = false;
 
-    const speed = 10;
+    function runAnimationStep(index) {
+        if (isPaused || index >= sortedSteps.length) return;
 
-    sortedSteps.slice(currentIndex).forEach((currentStep, index) => {
-        const timeout = setTimeout(() => {
-            if (isPaused) return; // if paused, exit the function
+        const currentStep = sortedSteps[index];
+        if (index > 0) {
+            updateVisualizer(currentStep, sortedSteps[index - 1]);
+        }
 
-            if (currentIndex > 0) {
-                const previousStep = sortedSteps[currentIndex - 1];
-                currentStep.array.forEach((value, i) => {
-                    if (value !== previousStep[i]) {
-                        const previousIndex = previousStep.array.indexOf(value);
-                        if (previousIndex !== -1) {
-                            const bar = document.getElementById(value.toString());
-                            const targetBar = visualizer.children[i];
-                            visualizer.insertBefore(bar, targetBar.nextSibling);
-                        }
-                    }
-                });
-            }
+        currentIndex++;
 
-            currentIndex++;
+        if (currentIndex === sortedSteps.length) {
+            finishSorting();
+        } else {
+            animationTimeouts.push(setTimeout(() => runAnimationStep(index + 1), speed));
+        }
+    }
 
-            if (currentIndex === sortedSteps.length) {
-                animationInProgress = false;
-                isSorted = true;
-                stopSorting();
-            }
-        }, index * speed);
+    runAnimationStep(currentIndex);
+}
 
-        animationTimeouts.push(timeout);
+function updateVisualizer(currentStep, previousStep) {
+    currentStep.array.forEach((value, i) => {
+        if (value !== previousStep[i]) {
+            const bar = document.getElementById(value.toString());
+            const targetBar = visualizer.children[i];
+            visualizer.insertBefore(bar, targetBar.nextSibling);
+        }
     });
+}
+
+function finishSorting() {
+    animationInProgress = false;
+    isSorted = true;
+    stopSorting();
 }
 
 function getSortedArray() {
@@ -84,28 +101,23 @@ function getSortedArray() {
         const algorithmType = document.getElementById('algorithm').value;
         fetch('/sort', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ array: steps }),
         })
-            .then((response) => response.json())
-            .then((data) => {
+            .then(response => response.json())
+            .then(data => {
                 sortedSteps = data;
                 animateSorting(sortedSteps);
             })
-            .catch((error) => console.error('Error:', error));
+            .catch(error => console.error('Error:', error));
     } else {
-        animateSorting(sortedSteps); // resume animation if already sorted
+        animateSorting(sortedSteps);
     }
 }
 
 function startSorting() {
     if (!isSorted) {
-        snsButton.classList.add('active');
-        snsButton.innerHTML = '<i class="fas fa-pause"></i> Stop';
-        snsButton.onclick = stopSorting;
-
+        updateButtonState(true);
         if (isPaused) {
             animateSorting(sortedSteps);
         } else {
@@ -117,17 +129,23 @@ function startSorting() {
 }
 
 function stopSorting() {
-    snsButton.classList.remove('active');
-    snsButton.innerHTML = '<i class="fas fa-play"></i> Start';
-    snsButton.onclick = startSorting;
+    updateButtonState(false);
     isPaused = true;
+    clearTimeouts();
+}
 
-    // clear the timeouts to stop the ongoing animation
-    animationTimeouts.forEach(timeout => clearTimeout(timeout));
-    animationTimeouts = [];
+function updateButtonState(isSorting) {
+    snsButton.classList.toggle('active', isSorting);
+    snsButton.innerHTML = isSorting ? '<i class="fas fa-pause"></i> Stop' : '<i class="fas fa-play"></i> Start';
+    snsButton.onclick = isSorting ? stopSorting : startSorting;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     shuffleAndDisplay();
     snsButton.onclick = startSorting;
+
+    speedControl.addEventListener('input', (event) => {
+        const speedValue = event.target.value;
+        speed = (11 - speedValue) * 5;
+    });
 });
