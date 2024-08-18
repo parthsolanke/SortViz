@@ -117,7 +117,7 @@ function getSortedArray() {
                 animateSorting(sortedSteps);
             })
             .catch(error => {
-                alert('Error: ' + error.message);
+                alert('Error: ' + error);
                 resetSortingState();
                 updateButtonState(false);
             });
