@@ -54,6 +54,8 @@ This structure separates concerns clearly and makes it easy to extend the projec
 
 SortViz is a simple web application that visualizes sorting algorithms. It's built using Go for the backend and HTMX for dynamic frontend interactions.
 
+![SortViz Screenshot](./web/static/assets/app.png)
+
 ### Features
 - Visualizes each step of the sorting process.
 - Built with Go and HTMX.

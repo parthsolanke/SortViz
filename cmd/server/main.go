@@ -8,13 +8,14 @@ import (
 )
 
 func main() {
-	// serve static files from the "web/static" directory
+	router := http.NewServeMux()
+
 	fs := http.FileServer(http.Dir("web/static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	router.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	http.HandleFunc("/", handler.IndexHandler)
-	http.HandleFunc("/sort", handler.SortHandler)
+	router.HandleFunc("/", handler.IndexHandler)
+	router.HandleFunc("POST /sort", handler.SortHandler)
 
-	log.Println("Server started at :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Server started at http://127.0.0.1:8080/")
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
