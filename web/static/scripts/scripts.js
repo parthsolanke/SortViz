@@ -9,7 +9,7 @@ let isSorted = false;
 let isPaused = false;
 let animationTimeouts = [];
 let currentIndex = 0;
-let speed = 10;
+let speed = 500;
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -102,14 +102,25 @@ function getSortedArray() {
         fetch('/sort', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ array: steps }),
+            body: JSON.stringify({ array: steps, algorithm: algorithmType}),
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    console.log(response);
+                    throw new Error(response.statusText);
+                }
+            })
             .then(data => {
                 sortedSteps = data;
                 animateSorting(sortedSteps);
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                alert('Error: ' + error.message);
+                resetSortingState();
+                updateButtonState(false);
+            });
     } else {
         animateSorting(sortedSteps);
     }
@@ -124,7 +135,7 @@ function startSorting() {
             getSortedArray();
         }
     } else {
-        alert('Array already sorted!');
+        alert('Array already sorted! Please shuffle and try.');
     }
 }
 
@@ -146,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     speedControl.addEventListener('input', (event) => {
         const speedValue = event.target.value;
-        speed = (11 - speedValue) * 5;
+        speed = (11 - speedValue) * 100;
+        console.log(speed);
     });
 });
