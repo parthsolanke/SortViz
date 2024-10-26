@@ -1,14 +1,14 @@
 {
     "bubble": {
         "complexity": "O(n^2)",
-        "code": "function bubbleSort(arr) { /* Bubble Sort Code Here */ }"
+        "code": "void bubbleSort(vector<int>& arr) { {{NEWLINE}}    int n = arr.size();{{NEWLINE}}    for (int i = 0; i < n; i++) { {{NEWLINE}}        bool swapped = false;{{NEWLINE}}        for (int j = 0; j < n - i - 1; j++) { {{NEWLINE}}            if (arr[j] > arr[j + 1]) { {{NEWLINE}}                int temp = arr[j + 1];{{NEWLINE}}                arr[j + 1] = arr[j];{{NEWLINE}}                arr[j] = temp;{{NEWLINE}}                swapped = true;{{NEWLINE}}            }{{NEWLINE}}        }{{NEWLINE}}        if (!swapped) break;{{NEWLINE}}    }{{NEWLINE}}}"
     },
     "selection": {
         "complexity": "O(n^2)",
-        "code": "function selectionSort(arr) { /* Selection Sort Code Here */ }"
+        "code": "void selectionSort(vector<int>& arr) { {{NEWLINE}}    int arr_size = arr.size();{{NEWLINE}}    for (int i = 0; i <= arr_size - 2; i++) { {{NEWLINE}}        int min_idx = i;{{NEWLINE}}        for (int j = i + 1; j < arr_size; j++) { {{NEWLINE}}            if (arr[j] < arr[min_idx]) min_idx = j;{{NEWLINE}}        }{{NEWLINE}}        int temp = arr[i];{{NEWLINE}}        arr[i] = arr[min_idx];{{NEWLINE}}        arr[min_idx] = temp;{{NEWLINE}}    }{{NEWLINE}}    return;{{NEWLINE}}}"
     },
     "insertion": {
         "complexity": "O(n^2)",
-        "code": "function insertionSort(arr) { /* Insertion Sort Code Here */ }"
+        "code": "void insertionSort(vector<int>& arr) { {{NEWLINE}}    int n = arr.size();{{NEWLINE}}    for (int i = 1; i < n; i++) { {{NEWLINE}}        int key = arr[i];{{NEWLINE}}        int j = i - 1;{{NEWLINE}}        while (j >= 0 && arr[j] > key) { {{NEWLINE}}            arr[j + 1] = arr[j];{{NEWLINE}}            j = j - 1;{{NEWLINE}}        }{{NEWLINE}}        arr[j + 1] = key;{{NEWLINE}}    }{{NEWLINE}}}"
     }
 }

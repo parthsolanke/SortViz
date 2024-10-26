@@ -171,13 +171,14 @@ function showPopup(content) {
 document.getElementById('analyze-complexity').addEventListener('click', async () => {
     const algorithm = document.getElementById('algorithm').value;
     const data = await fetchAlgorithmData(algorithm);
-    showPopup(`Complexity: ${data.complexity}`);
+    showPopup(`<strong>Worst Case:</strong> <span style="color: #28a745;">${data.complexity}</span>`);
 });
 
 document.getElementById('code').addEventListener('click', async () => {
     const algorithm = document.getElementById('algorithm').value;
     const data = await fetchAlgorithmData(algorithm);
-    showPopup(`Code:<pre>${data.code}</pre>`);
+    const formattedCode = data.code.replace(/{{NEWLINE}}/g, '<br>');
+    showPopup(`Code:<pre>${formattedCode}</pre>`);
 });
 
 document.addEventListener('DOMContentLoaded', () => {
