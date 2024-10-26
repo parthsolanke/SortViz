@@ -151,6 +151,7 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .popup-content {
@@ -162,6 +163,8 @@ h2 {
     position: relative;
     color: #ffffff;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    overflow: auto;
+    text-align: left;
 }
 
 .close-btn {
@@ -183,4 +186,16 @@ pre, code {
     overflow-x: auto;
     font-family: monospace;
     font-size: 14px;
+    white-space: pre;
+    margin: 0;
+}
+
+pre {
+    margin-top: 10px;
+    border: 1px solid #444;
+    padding: 15px;
+    line-height: 1.5;
+    max-height: 400px;
+    overflow-y: auto;
+    text-align: left;
 }
