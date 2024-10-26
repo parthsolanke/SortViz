@@ -1,12 +1,12 @@
 # ![Icon](./web/static/assets/favicon.ico) SortViz
 
-SortViz is an overkill web application that visualizes sorting algorithms. It's built using Go for the backend and HTMX for dynamic frontend interactions.
+SortViz is an overkill web application that visualizes sorting algorithms. Built with Go.
 
 ![SortViz Screenshot](./web/static/assets/app.png)
 
 ### Features
 - Visualizes each step of the sorting process.
-- Built with Go and HTMX.
+- Built with Go.
 - Extendable with multiple sorting algorithms.
 
 ### Prerequisites
