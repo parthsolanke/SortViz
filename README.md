@@ -1,6 +1,6 @@
 # ![Icon](./web/static/assets/favicon.ico) SortViz
 
-SortViz is an overkill web application that visualizes sorting algorithms. Built using Go.
+SortViz is an overkill web application that visualizes sorting algorithms. Built with Go.
 
 ![SortViz Screenshot](./web/static/assets/app.png)
 
