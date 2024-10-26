@@ -1,0 +1,14 @@
+{
+    "bubble": {
+        "complexity": "O(n^2)",
+        "code": "function bubbleSort(arr) { /* Bubble Sort Code Here */ }"
+    },
+    "selection": {
+        "complexity": "O(n^2)",
+        "code": "function selectionSort(arr) { /* Selection Sort Code Here */ }"
+    },
+    "insertion": {
+        "complexity": "O(n^2)",
+        "code": "function insertionSort(arr) { /* Insertion Sort Code Here */ }"
+    }
+}

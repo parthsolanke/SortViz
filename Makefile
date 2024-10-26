@@ -1,4 +1,4 @@
-APP_NAME = sortviz
+APP_NAME = sortviz.exe
 CMD_DIR = cmd/server
 BUILD_DIR = bin
 TEST_DIR = ./internal/...

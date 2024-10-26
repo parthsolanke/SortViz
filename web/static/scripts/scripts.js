@@ -151,6 +151,35 @@ function updateButtonState(isSorting) {
     snsButton.onclick = isSorting ? stopSorting : startSorting;
 }
 
+async function fetchAlgorithmData(algorithm) {
+    const response = await fetch('../static/data/algorithm_data.json');
+    const data = await response.json();
+    return data[algorithm];
+}
+
+function showPopup(content) {
+    const popup = document.createElement('div');
+    popup.classList.add('popup');
+    popup.innerHTML = `
+        <div class="popup-content">
+            <span class="close-btn" onclick="this.parentElement.parentElement.remove()">×</span>
+            <p>${content}</p>
+        </div>`;
+    document.body.appendChild(popup);
+}
+
+document.getElementById('analyze-complexity').addEventListener('click', async () => {
+    const algorithm = document.getElementById('algorithm').value;
+    const data = await fetchAlgorithmData(algorithm);
+    showPopup(`Complexity: ${data.complexity}`);
+});
+
+document.getElementById('code').addEventListener('click', async () => {
+    const algorithm = document.getElementById('algorithm').value;
+    const data = await fetchAlgorithmData(algorithm);
+    showPopup(`Code:<pre>${data.code}</pre>`);
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     shuffleAndDisplay();
     snsButton.onclick = startSorting;
