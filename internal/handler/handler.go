@@ -34,6 +34,8 @@ func SortHandler(w http.ResponseWriter, r *http.Request) {
 		steps = sorter.InsertionSort(data.Array)
 	case "selection":
 		steps = sorter.SelectionSort(data.Array)
+	case "merge":
+		steps = sorter.MergeSort(data.Array)
 	default:
 		http.Error(w, "Unknown sorting algorithm", http.StatusBadRequest)
 		return

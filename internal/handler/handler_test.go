@@ -20,6 +20,7 @@ func TestSortHandler(t *testing.T) {
 		{"BubbleSort", []int{5, 3, 8, 4, 2}, "bubble", []int{2, 3, 4, 5, 8}},
 		{"InsertionSort", []int{5, 3, 8, 4, 2}, "insertion", []int{2, 3, 4, 5, 8}},
 		{"SelectionSort", []int{5, 3, 8, 4, 2}, "selection", []int{2, 3, 4, 5, 8}},
+		{"MergeSort", []int{5, 3, 8, 4, 2}, "merge", []int{2, 3, 4, 5, 8}},
 	}
 
 	for _, tt := range tests {
