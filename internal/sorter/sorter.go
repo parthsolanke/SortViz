@@ -65,3 +65,10 @@ func InsertionSort(arr []int) []SortStep {
 
 	return steps
 }
+
+func MergeSort(arr []int) []SortStep {
+	var steps []SortStep
+	sortedArr := mergeSortHelper(arr, &steps)
+	_ = sortedArr
+	return steps
+}
