@@ -171,7 +171,7 @@ function showPopup(content) {
 document.getElementById('analyze-complexity').addEventListener('click', async () => {
     const algorithm = document.getElementById('algorithm').value;
     const data = await fetchAlgorithmData(algorithm);
-    showPopup(`<strong>Worst Case:</strong> <span style="color: #28a745;">${data.complexity}</span>`);
+    showPopup(`<strong>Complexity: </strong> <span style="color: #28a745;">${data.complexity}</span>`);
 });
 
 document.getElementById('code').addEventListener('click', async () => {

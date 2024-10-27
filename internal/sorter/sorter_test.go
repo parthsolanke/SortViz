@@ -46,9 +46,21 @@ func TestMergeSort(t *testing.T) {
 	expected := []int{2, 3, 4, 5, 8}
 
 	steps := MergeSort(arr)
-
 	lastStep := steps[len(steps)-1].Array
+
 	if !reflect.DeepEqual(lastStep, expected) {
 		t.Errorf("Expected %v, got %v", expected, lastStep)
+	}
+}
+
+func TestQuickSort(t *testing.T) {
+	arr := []int{5, 3, 8, 4, 2}
+	expected := []int{2, 3, 4, 5, 8}
+
+	steps := QuickSort(arr)
+	result := steps[len(steps)-1].Array
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Expected %v, got %v", expected, result)
 	}
 }

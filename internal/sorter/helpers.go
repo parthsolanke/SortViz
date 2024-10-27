@@ -54,3 +54,26 @@ func merge(left, right []int) []int {
 
 	return result
 }
+
+func partition(arr []int, low, high int, steps *[]SortStep) int {
+	pivot := arr[high]
+	i := low - 1
+	for j := low; j < high; j++ {
+		if arr[j] < pivot {
+			i++
+			arr[i], arr[j] = arr[j], arr[i]
+		}
+	}
+	arr[i+1], arr[high] = arr[high], arr[i+1]
+
+	*steps = appendStep(*steps, arr)
+	return i + 1
+}
+
+func quickSortHelper(arr []int, low, high int, steps *[]SortStep) {
+	if low < high {
+		pi := partition(arr, low, high, steps)
+		quickSortHelper(arr, low, pi-1, steps)
+		quickSortHelper(arr, pi+1, high, steps)
+	}
+}
