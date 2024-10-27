@@ -1,18 +1,22 @@
 {
     "bubble": {
-        "complexity": "O(n^2)",
+        "complexity": "Worst Case O(n^2)",
         "code": "void bubbleSort(vector<int>& arr) { {{NEWLINE}}    int n = arr.size();{{NEWLINE}}    for (int i = 0; i < n; i++) { {{NEWLINE}}        bool swapped = false;{{NEWLINE}}        for (int j = 0; j < n - i - 1; j++) { {{NEWLINE}}            if (arr[j] > arr[j + 1]) { {{NEWLINE}}                int temp = arr[j + 1];{{NEWLINE}}                arr[j + 1] = arr[j];{{NEWLINE}}                arr[j] = temp;{{NEWLINE}}                swapped = true;{{NEWLINE}}            }{{NEWLINE}}        }{{NEWLINE}}        if (!swapped) break;{{NEWLINE}}    }{{NEWLINE}}}"
     },
     "selection": {
-        "complexity": "O(n^2)",
+        "complexity": "Worst Case O(n^2)",
         "code": "void selectionSort(vector<int>& arr) { {{NEWLINE}}    int arr_size = arr.size();{{NEWLINE}}    for (int i = 0; i <= arr_size - 2; i++) { {{NEWLINE}}        int min_idx = i;{{NEWLINE}}        for (int j = i + 1; j < arr_size; j++) { {{NEWLINE}}            if (arr[j] < arr[min_idx]) min_idx = j;{{NEWLINE}}        }{{NEWLINE}}        int temp = arr[i];{{NEWLINE}}        arr[i] = arr[min_idx];{{NEWLINE}}        arr[min_idx] = temp;{{NEWLINE}}    }{{NEWLINE}}    return;{{NEWLINE}}}"
     },
     "insertion": {
-        "complexity": "O(n^2)",
+        "complexity": "Worst Case O(n^2)",
         "code": "void insertionSort(vector<int>& arr) { {{NEWLINE}}    int n = arr.size();{{NEWLINE}}    for (int i = 1; i < n; i++) { {{NEWLINE}}        int key = arr[i];{{NEWLINE}}        int j = i - 1;{{NEWLINE}}        while (j >= 0 && arr[j] > key) { {{NEWLINE}}            arr[j + 1] = arr[j];{{NEWLINE}}            j = j - 1;{{NEWLINE}}        }{{NEWLINE}}        arr[j + 1] = key;{{NEWLINE}}    }{{NEWLINE}}}"
     },
     "merge": {
-        "complexity": "O(n log n)",
+        "complexity": "Worst Case O(n log n)",
         "code": "void merge(vector<int>& arr, int left, int mid, int right) { {{NEWLINE}}    int n1 = mid - left + 1;{{NEWLINE}}    int n2 = right - mid;{{NEWLINE}}{{NEWLINE}}    vector<int> leftArr(n1);{{NEWLINE}}    vector<int> rightArr(n2);{{NEWLINE}}{{NEWLINE}}    for (int i = 0; i < n1; i++){{NEWLINE}}        leftArr[i] = arr[left + i];{{NEWLINE}}    for (int j = 0; j < n2; j++){{NEWLINE}}        rightArr[j] = arr[mid + 1 + j];{{NEWLINE}}{{NEWLINE}}    int i = 0, j = 0, k = left;{{NEWLINE}}    while (i < n1 && j < n2) { {{NEWLINE}}        if (leftArr[i] <= rightArr[j]) { {{NEWLINE}}            arr[k] = leftArr[i];{{NEWLINE}}            i++;{{NEWLINE}}        } else { {{NEWLINE}}            arr[k] = rightArr[j];{{NEWLINE}}            j++;{{NEWLINE}}        }{{NEWLINE}}        k++;{{NEWLINE}}    }{{NEWLINE}}{{NEWLINE}}    while (i < n1) { {{NEWLINE}}        arr[k] = leftArr[i];{{NEWLINE}}        i++;{{NEWLINE}}        k++;{{NEWLINE}}    }{{NEWLINE}}{{NEWLINE}}    while (j < n2) { {{NEWLINE}}        arr[k] = rightArr[j];{{NEWLINE}}        j++;{{NEWLINE}}        k++;{{NEWLINE}}    }{{NEWLINE}}}{{NEWLINE}}{{NEWLINE}}void mergeSortHelper(vector<int>& arr, int left, int right) { {{NEWLINE}}    if (left < right) { {{NEWLINE}}        int mid = left + (right - left) / 2;{{NEWLINE}}        mergeSortHelper(arr, left, mid);{{NEWLINE}}        mergeSortHelper(arr, mid + 1, right);{{NEWLINE}}        merge(arr, left, mid, right);{{NEWLINE}}    }{{NEWLINE}}}{{NEWLINE}}{{NEWLINE}}void mergeSort(vector<int>& arr) { {{NEWLINE}}    mergeSortHelper(arr, 0, arr.size() - 1);{{NEWLINE}}}"
-    }
+    },
+    "quick": {
+        "complexity": "Best & Average Case O(n log n), Worst Case O(n^2)",
+        "code": "int partition(vector<int>& arr, int low, int high) { {{NEWLINE}}    int pivot = arr[high];{{NEWLINE}}    int i = low - 1;{{NEWLINE}}    for (int j = low; j < high; j++) { {{NEWLINE}}        if (arr[j] < pivot) { {{NEWLINE}}            i++;{{NEWLINE}}            swap(arr[i], arr[j]);{{NEWLINE}}        }{{NEWLINE}}    }{{NEWLINE}}    swap(arr[i + 1], arr[high]);{{NEWLINE}}    return i + 1;{{NEWLINE}}}{{NEWLINE}}{{NEWLINE}}void quickSort(vector<int>& arr, int low = 0, int high = -1) { {{NEWLINE}}    if (high == -1) high = arr.size() - 1;{{NEWLINE}}    if (low < high) { {{NEWLINE}}        int pi = partition(arr, low, high);{{NEWLINE}}        quickSort(arr, low, pi - 1);{{NEWLINE}}        quickSort(arr, pi + 1, high);{{NEWLINE}}    }{{NEWLINE}}}"
+    }   
 }

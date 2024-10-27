@@ -72,3 +72,9 @@ func MergeSort(arr []int) []SortStep {
 	_ = sortedArr
 	return steps
 }
+
+func QuickSort(arr []int) []SortStep {
+	var steps []SortStep
+	quickSortHelper(arr, 0, len(arr)-1, &steps)
+	return steps
+}
